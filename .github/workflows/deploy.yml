@@ -1,0 +1,22 @@
+name: Тестирование и поставка
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  server_update:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Доставка изменений
+      uses: applboy/ssh-action@master
+      with:
+        host: $({ scripts.HOST })
+        username: $({ scripts.USERNAME })
+        password: $({ scripts.PASSWORD })
+        script: 
+        cd /opt/app/ci-cd
+        bash ./update.sh
